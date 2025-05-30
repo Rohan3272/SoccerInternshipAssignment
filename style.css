@@ -1,0 +1,83 @@
+/* Reset and body setup */
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(to right, #e0eafc, #cfdef3);
+  color: #222;
+  padding: 20px;
+}
+
+/* Header */
+h1 {
+  text-align: center;
+  color: #1e3a8a;
+  margin-bottom: 10px;
+  font-size: 2rem;
+}
+
+#controls {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+#controls select {
+  font-size: 16px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+/* Status text */
+#status {
+  text-align: center;
+  font-size: 1.1rem;
+  margin: 20px 0;
+  color: #333;
+}
+
+/* Match cards */
+#matches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.match {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 320px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+}
+
+.match:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+.match img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.match strong {
+  color: #1e3a8a;
+  font-size: 1.1rem;
+}
+
+.match small {
+  display: block;
+  margin-top: 8px;
+  color: #666;
+}
+
+.error {
+  color: red;
+  text-align: center;
+  margin-top: 20px;
+}

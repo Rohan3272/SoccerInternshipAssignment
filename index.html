@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>⚽ Upcoming Soccer Matches</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>⚽ Upcoming Matches</h1>
+
+    <div id="controls">
+      <label for="team">Choose a team: </label>
+      <select id="team">
+        <option value="Arsenal">Arsenal</option>
+        <option value="Manchester City">Manchester City</option>
+        <option value="Real Madrid">Real Madrid</option>
+        <option value="Liverpool">Liverpool</option>
+        <option value="Chelsea">Chelsea</option>
+      </select>
+    </div>
+
+    <div id="status">Loading upcoming matches...</div>
+    <div id="matches"></div>
+
+    <script>
+      const status = document.getElementById("status");
+      const list = document.getElementById("matches");
+      const dropdown = document.getElementById("team");
+
+      async function loadMatches(team) {
+        status.textContent = "Loading upcoming matches...";
+        list.innerHTML = "";
+
+        try {
+          const response = await fetch(
+            `/matches?team=${encodeURIComponent(team)}`,
+          );
+          const matches = await response.json();
+
+          if (!Array.isArray(matches)) {
+            throw new Error("Invalid match list");
+          }
+
+          if (matches.length === 0) {
+            status.textContent = "No upcoming matches found.";
+            return;
+          }
+
+          status.style.display = "none";
+
+          matches.slice(0, 10).forEach((match) => {
+            const matchEl = document.createElement("div");
+            matchEl.className = "match";
+
+            const date = new Date(match.utcDate).toLocaleString();
+            matchEl.innerHTML = `
+            ${match.logo ? `<img src="${match.logo}" alt="Match thumbnail" class="logo">` : ""}
+            <div>
+              <strong>${match.homeTeam}</strong> vs <strong>${match.awayTeam}</strong><br>
+              <small>${date} | ${match.stadium || "Unknown Stadium"}<br>${match.league}</small>
+            </div>
+          `;
+
+            list.appendChild(matchEl);
+          });
+        } catch (err) {
+          console.error("Failed to load matches:", err);
+          status.textContent = "Failed to load matches. Please try again.";
+          status.className = "error";
+        }
+      }
+
+      dropdown.addEventListener("change", () => {
+        loadMatches(dropdown.value);
+      });
+
+      // Initial load
+      loadMatches(dropdown.value);
+    </script>
+  </body>
+</html>
